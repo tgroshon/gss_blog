@@ -1,0 +1,50 @@
+baseURL = "https://blog.groshong.software/"
+languageCode = "en-us"
+title = "Software Ate My Brain"
+theme = "binario"
+
+[Author] # Used in authorbox
+  name = "Tommy Groshong"
+  bio = "Programmer who does things"
+  avatar = "img/tommy.jpg"
+
+[Params]
+  description = "Thoughts and learnings on software and how it's made" # Site Description. Used in meta description
+  copyright = "Tommy Groshong Jr." # Copyright holder, otherwise will use .Site.Title
+  opengraph = true # Enable OpenGraph if true
+  twitter_cards = true # Enable Twitter Cards if true
+  columns = 2 # Set the number of cards columns. Possible values: 1, 2, 3
+  mainSections = ["post"] # Set main page sections
+  post_meta = ["date", "categories"] # Enable post meta fields in given order
+  dateFormat = "02 January 2006" # Change the format of dates
+  colorTheme = "" # dark-green, dark-blue, dark-red, dark-violet
+  customCSS = ["css/custom.css"] # Include custom CSS files
+  mainMenuAlignment = "right" # Align main menu (desktop version) to the right side
+  authorbox = true # Show authorbox at bottom of single pages if true
+  toc = true # Enable Table of Contents for all site pages
+  tocOpen = true # Open Table of Contents block. Optional
+  comments = true # Enable comments for all site pages
+  related = true # Enable Related content for single pages
+  relatedMax = 5 # Set the maximum number of posts that can be displayed in related block. Optional
+  mathjax = true # Enable MathJax for all site pages
+  mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" # Specify MathJax path. Optional
+  mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config. Optional
+  hideNoPostsWarning = false # Don't show no posts empty state warning in main page, if true
+
+[Params.Social]
+  email = "tom@groshong.software"
+  github = "tgroshon"
+  twitter = "tgroshon"
+  stackoverflow = "2631962"
+  linkedin = "thomas-groshong-2b23aa28"
+
+[Params.Share]
+  facebook = true
+  twitter = true
+  reddit = true
+  telegram = true
+  linkedin = true
+  pocket = true
+
+[outputs]
+  home = ["HTML", "RSS"]
