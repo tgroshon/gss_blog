@@ -4,6 +4,8 @@ date: 2019-04-11T20:24:55-04:00
 draft: false
 ---
 
+## Introduction
+
 I recently learned about [AWS AppSync](https://aws.amazon.com/appsync/) while perusing A Cloud Guru
 courses and stumbling on this one: ["Introduction to AWS AppSync"](https://acloud.guru/learn/intro-aws-appsync).
 I am excited! AppSync is a managed service for deploying GraphQL APIs. Think of it like
@@ -32,6 +34,8 @@ B. Declare queries, mutations, subscriptions
 GraphQL is strongly typed. It has some built-in data types like `ID`, `String`, `Boolean`, `Int`, etc.
 AWS also included some [custom types](https://docs.aws.amazon.com/appsync/latest/devguide/scalars.html)
 like `AWSDate`, `AWSEmail`, and `AWSPhone` that are automatically validated.
+
+### Schema Example
 
 A simple schema could look like this:
 
@@ -135,6 +139,8 @@ Also, they have a good collection of pre-built VTL templates that do a surprisin
 learn basic VTL syntax and providing some useful recipes around doing authorization checks and constructing
 some of the more tricky pieces like DynamoDB expressions. The following are some examples of resolvers
 
+
+### Resolver Example
 
 Most common *response* resolver:
 
