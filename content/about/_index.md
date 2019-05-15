@@ -1,5 +1,0 @@
----
-menu: "main"
----
-
-About me!!!

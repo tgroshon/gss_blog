@@ -39,10 +39,10 @@ like `AWSDate`, `AWSEmail`, and `AWSPhone` that are automatically validated.
 
 A simple schema could look like this:
 
-```graphql
-// List out the types for your models
+{{<highlight graphql "linenos=table" >}}
+# List out the types for your models
 type User {
-  id: ID!  // Exlamation point denotes a required field
+  id: ID!  # Exlamation point denotes a required field
   name: String!
   email: AWSEmail!
 }
@@ -58,10 +58,10 @@ type Post {
   id: ID!
   title: String!
   content: String!
-  comments: [Comment] // Square brackets denote an array
+  comments: [Comment] # Square brackets denote an array
 }
 
-// List out your inputs; complex parameters passed to functions
+# List out your inputs; complex parameters passed to functions
 input PostInput {
   id: ID!
   title: String!
@@ -75,7 +75,7 @@ input UserInput {
   email: AWSEmail!
 }
 
-// All the queries (reads) that can be done - RPC style!
+# All the queries (reads) that can be done - RPC style!
 type Query {
   getUser(id: ID!): User
   listUsers: [User]
@@ -83,18 +83,18 @@ type Query {
   listPosts: [Posts]
 }
 
-// All the mutations (writes) that can be done - RPC style!
+# All the mutations (writes) that can be done - RPC style!
 type Mutation {
   createPost(input: PostInput): Post
   createUser(input: UserInput): User
 }
 
-// Your API Schema declaration!!!
+# Your API Schema declaration!!!
 schema {
   query: Query
   mutation: Mutation
 }
-```
+{{</highlight>}}
 
 ## Configure Data Sources
 
@@ -151,20 +151,21 @@ $util.toJson($context.result)
 Common *request* resolvers (note that Lambda Function names and DynamoDB Table Names are not specified because
 each function and table is a unique data source and resolvers are configured for a specific data source):
 
-```json
-## Invoking a lambda function data source
+
+{{<highlight javascript "linenos=table" >}}
+// Invoking a lambda function data source
 {
     "version" : "2017-02-28",
     "operation": "Invoke",
     "payload": {
-      ## ... any arguments you want included in the event body
+      // ... any arguments you want included in the event body
       "arguments": $util.toJson($context.arguments)
     }
 }
 
 
-## Scan DynamoDB Table
-## NOTE: AWS template are pre-built to support paginating results with limits and next tokens
+// Scan DynamoDB Table
+// NOTE: AWS template are pre-built to support paginating results with limits and next tokens
 
 #set( $limit = $util.defaultIfNull($context.args.limit, 20) )
 {
@@ -183,7 +184,7 @@ null
   #end
 }
 
-## Query DynamoDB Global-Secondary Index
+// Query DynamoDB Global-Secondary Index
 
 #set( $expression = "#day = :day" )
 #set( $expNames = {"#day": "day"} )
@@ -208,7 +209,7 @@ null
     "nextToken": $util.toJson($util.defaultIfNullOrBlank($ctx.args.nextToken, null))
 }
 
-```
+{{</highlight>}}
 
 Honestly, I was a little miffed at needing to learn _yet-another-template-language_, but after a few
 hours it did fade into the background. If you are proficient with whatever your underlying data source
