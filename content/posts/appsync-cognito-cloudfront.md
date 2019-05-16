@@ -2,6 +2,16 @@
 title: "Appsync Cognito Cloudfront"
 date: 2019-05-13T20:44:15-04:00
 draft: true
+categories:
+  - DevOps
+  - Web Development
+tags:
+  - AWS
+  - Serverless
+  - GraphQL
+  - AppSync
+  - JavaScript
+  - Terraform
 ---
 
 ## Introduction
@@ -19,7 +29,7 @@ So now that you got the basic picture of GraphQL, how could you deploy it in AWS
 work with API Gateway but it's a little cludgey and normally results in implementing a super Lambda
 function that contains all your GraphQL resolver logic.
 
-Lucky us! AWS has a GraphQL specific API proxy called [AppSync](https://aws.amazon.com/appsync/).
+Lucky us! AWS has a GraphQL specific API proxy called AppSync.
 Last month, I did an [article overviewing AppSync]({{< ref "aws-appsync.md" >}}) and concluded
 I would try it out on an upcoming project. Well dear reader, I have done it and now I am bringing
 you my results!

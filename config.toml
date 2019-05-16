@@ -1,40 +1,61 @@
-baseURL = "https://tommygroshong.com/"
-languageCode = "en-us"
-title = "Software Ate My Brain"
-theme = "binario"
-
+baseurl = "https://tommygroshong.com/"
+title = "TommyGroshong.com"
+theme = "whiteplain"
+languageCode = "en"
 pygmentsCodeFences = true
+# disqusShortname = "Shortname"
+# googleAnalytics = "Toracking ID"
 
-[Author] # Used in authorbox
+# Copyright notice. This is displayer in the footer.
+copyright = "&copy; Copyright 2019 Thomas Groshong Jr"
+
+[params]
+  # whether to use CDN or local file for fontawesome
+  #useCDN = false
+  # whether to include external sharing scripts and icons for twitter, facebook and co.
+  #showShareIcons = false
+  # Date format
+  dateFormat = "January 2, 2006"
+
+[params.author]
   name = "Tommy Groshong"
-  bio = "Lazy programmer with simultaneous hyperfocus and attention deficits."
-  avatar = "img/tommy.jpg"
+  gravatar = "3ef06d69d25df6c31fb095cfc6b08178"
 
-[Params]
-  pygmentsCodeFences = true
-  description = "Thoughts and learnings on software and how it's made" # Site Description. Used in meta description
-  copyright = "Tommy Groshong Jr." # Copyright holder, otherwise will use .Site.Title
-  opengraph = true # Enable OpenGraph if true
-  twitter_cards = true # Enable Twitter Cards if true
-  columns = 2 # Set the number of cards columns. Possible values: 1, 2, 3
-  mainSections = ["posts"] # Set main page sections
-  post_meta = ["date", "categories"] # Enable post meta fields in given order
-  dateFormat = "02 January 2006" # Change the format of dates
-
-[Params.Social]
-  email = "tom@groshong.software"
-  github = "tgroshon"
   twitter = "tgroshon"
-  stackoverflow = "2631962"
   linkedin = "thomas-groshong-2b23aa28"
+  github = "tgroshon"
+  stackoverflow = "2631962"
+  email = "tom@groshong.software"
 
-[Params.Share]
-  facebook = true
-  twitter = true
-  reddit = true
-  telegram = true
-  linkedin = true
-  pocket = true
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
 
-[outputs]
-  home = ["HTML", "RSS"]
+[[menu.main]]
+  name = "Categories"
+  identifier = "categories"
+  url = "/categories/"
+  weight = 1
+[[menu.main]]
+  name = "Tags"
+  identifier = "tags"
+  url = "/tags/"
+  weight = 2
+[[menu.main]]
+  name = "Archives"
+  identifier = "archives"
+  url = "/archives/"
+  weight = 3
+[[menu.main]]
+  name = "About"
+  identifier = "about"
+  url = "/about/"
+  weight = 1
+
+# Footer Menu
+[[menu.footer]]
+  name = "About"
+  weight = 1
+  identifier = "about"
+  url = "/about/"

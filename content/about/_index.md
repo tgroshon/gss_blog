@@ -1,11 +1,6 @@
 ---
 title: About
-menu: main
 ---
-
-## Tommy Groshong Jr
-
-![Tommy Groshong](/img/tommy.jpg)
 
 *Probably* an expert in creating efficiency improvements through building software applications,
 migration and optimization of cloud infrastructure, and business strategy consulting for managers

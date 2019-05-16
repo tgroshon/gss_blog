@@ -1,7 +1,13 @@
 ---
 title: "Overview of AWS AppSync"
 date: 2019-04-11T20:24:55-04:00
-draft: false
+categories:
+  - DevOps
+tags:
+  - AWS
+  - Serverless
+  - GraphQL
+  - AppSync
 ---
 
 ## Introduction

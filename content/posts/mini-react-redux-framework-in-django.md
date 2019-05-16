@@ -1,6 +1,14 @@
 ---
 title: "Mini-React-Redux Framework in Django"
 date: 2017-01-20
+categories:
+  - Web Development
+tags:
+  - JavaScript
+  - React
+  - Redux
+  - Django
+  - Python
 ---
 
 ## Introduction

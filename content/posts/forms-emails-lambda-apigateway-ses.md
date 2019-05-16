@@ -1,6 +1,14 @@
 ---
 title: "Forms to Emails using AWS Lambda + API Gateway + SES "
 date: 2016-04-05T17:18:28-04:00
+categories:
+  - DevOps
+  - Web Development
+tags:
+  - AWS
+  - Serverless
+  - JavaScript
+
 ---
 
 When deploying static websites, I am not a fan of provisioning servers to distribute them.  There are so many alternatives that are cheaper, simpler, and faster than managing a full backend server: S3 buckets, Content-Delivery Networks (CDNs), etc.  But the catch with getting rid of a server is now you don't have a server anymore!  Without a server, where are you going to submit forms to?  Lucky for us, in a post-cloud world, we can solve this!

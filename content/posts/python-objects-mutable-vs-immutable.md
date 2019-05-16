@@ -1,6 +1,8 @@
 ---
 title: "Python Objects: Mutable vs Immutable"
 date: 2013-12-24T17:39:21-04:00
+tags:
+  - Python
 ---
 
 Not all python objects handle changes the same way. Some objects are mutable, meaning they can be altered.  Others are immutable; they cannot be changed but rather return new objects when attempting to update. What does this mean when writing python code?
