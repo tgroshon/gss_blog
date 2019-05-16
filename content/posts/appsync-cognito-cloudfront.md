@@ -1,7 +1,6 @@
 ---
-title: "Appsync Cognito Cloudfront"
+title: "Practical Appsync + Cognito for Single-Page Applications"
 date: 2019-05-13T20:44:15-04:00
-draft: true
 categories:
   - DevOps
   - Web Development
@@ -16,35 +15,99 @@ tags:
 
 ## Introduction
 
-Serverless architecture, despite the click-baity and inaccurate name, has interested me for the last
-couple years. I love how it takes the on-demand and pay-for-what-you-use quality of the cloud and
-breaks that down to the request level. Because AWS is my preferred cloud provider, [Lambda](https://aws.amazon.com/lambda/)
-is a key part of many of my projects. Usually, I couple Lambda with [API Gateway](https://aws.amazon.com/api-gateway/)
-which acts as the HTTP proxy mapping web endpoints to Lambda functions. That works great for
-HTTP API's and I recommend it.
+If you want to get new-agey and deploy a [GraphQL](https://graphql.org) API in a _serverless_ architecture,
+what's the best way? You can make that work with API Gateway but it's a little cludgey and normally results
+in implementing a super Lambda function that contains all your GraphQL resolver logic.
 
-However, what if you want to get new-agey and deploy a [GraphQL](https://graphql.org) API?
-If you aren't sure what GraphQL is, you should check official website which has a great tutorial.
-So now that you got the basic picture of GraphQL, how could you deploy it in AWS? You can make that
-work with API Gateway but it's a little cludgey and normally results in implementing a super Lambda
-function that contains all your GraphQL resolver logic.
+Lucky us! AWS has a GraphQL specific API proxy called AppSync. Last month, I did an
+[article overviewing AppSync]({{< ref "aws-appsync.md" >}}) and concluded I would try it out on an upcoming
+project. Well dear reader, I have done it and now I am bringing you my results!
 
-Lucky us! AWS has a GraphQL specific API proxy called AppSync.
-Last month, I did an [article overviewing AppSync]({{< ref "aws-appsync.md" >}}) and concluded
-I would try it out on an upcoming project. Well dear reader, I have done it and now I am bringing
-you my results!
+## Starting with AWS Amplify ##
 
-## Building a React SPA with Amplify
+[AWS Amplify](https://aws-amplify.github.io/docs/) is a cool project with a lot of potential.
+It's made up of several different projects:
 
-### Amplify Lib & CLI
+  - Amplify Framework: client libs for JS and Native
+  - Amplify CLI: command line tool for bootstrapping your project and managing backend code and infrastructure
+  - Amplify Console: CI/CD system that deploys amplify compatible apps
 
+(I may have the naming scheme wrong; but it seems correct to me)
 
-### Amplify Console
+The Amplify framework is a great set of libraries. It offers you clients for AppSync, Cognito, and more.
+The AppSync client it provides is also compatible with the popular [Apollo](https://www.apollographql.com/)
+project. Amplify Framework and Amplify CLI are often used hand-in-hand. The Amplify console is purely optional.
 
-## Replacing Amplify with Terraform and Serverless
+One thing to note, everytime I setup Amplify Console, it deployed to a different S3 bucket than my
+CLI configured **hosting** resources.  Not sure if that's always the case or I just missed something.
 
-### Terraform Scripts
+Out-of-the-box, the CLI tool gives you a lot:
 
-### Serverless
+ - Scaffolds AppSync API w/ Cognito Auth
+ - Infers AppSync resolvers and data source backends from annotated GraphQL schema
+ - Code generation for GraphQL queries, mutations, and subscriptions
+ - Manages Lambda Functions
+ - Creates S3+Cloudfront CDN static hosting for your SPA
+
+Overall, Amplify really is an awesome project and provided an excellent dev/test environment for me to
+quickly iterate and experiment with AppSync and Cognito.
+
+(there's a **but** coming)
+
+### BUT... ###
+
+Amplify CLI has a few edge cases that are either really annoying **OR** are missing and
+_really_  important for production applications.
+
+  - DynamoDB secondary indexes; HUGELY IMPORTANT!
+  - Connecting Lambda functions to AppSync is tricky and poorly documented
+  - Lambda functions better be in Node.js or you'll have a hard time
+  - No dry run (i.e. Cloudformation change set) that reports what it will change on `push`
+  - Many config files are in `.gitignore` and the process to download them is brittle and a little cludgey
+  - Each type of amplify resource uses Cloudformation differently; e.g. some only support JSON or only support YAML
+  - Uses Cloudformation for everything:
+    * Annoyingly slow for very simple changes
+    * Hellish debugging: poor error reporting and uses nested stacks injected with implicit variables
+    * Failure rollbacks are annoying and occasionally scary (I dropped Dynamo tables unexpectedly multiple times; still not sure why)
+
+A lot of these things will be addressed as Amplify continues to mature, I have no doubt.
+
+I also don't fault Amplify team for using Cloudformation because (a) they work at Amazon,
+(b) it stores all state in AWS, and (c) rollbacks _can be_ nice. But my personal
+goal is to use Cloudformation _as little as possible_. Small doses, it's fine. Big
+projects, annoying AF.
+
+## Replacing Amplify for Production ##
+
+For using Cognito and AppSync in the client, I still use the Amplify JS
+libraries which are quite awesome.
+
+Then, using the Cloudformation tempates generated by Amplify CLI as a  guide,
+I re-implemented them in terraform! For Lambda functions, I used serverless!
+
+Here is a link to an example repository: https://github.com/tgroshon/amplify2terraform
+
+Upsides of this approach:
+
+  - Using Terraform!
+    * Changes are comparatively lightning fast (ok, my setup creates a Cloudfront distro which takes forever, but otherwise ... fast!)
+    * Predictable and well-understood `plan` and `apply` workflow
+    * HCL is 10x better than cloudformation templates
+    * Workspaces do the `amplify env` workflow more transparently
+    * Complete control of your infrastructure
+  - Using Serverless!
+    * Awesomely battle-tested project
+    * Supports _tons_ of languages _and_ Lambda Layers
+    * Still lets you do Cloudformation if you need to (meh)
+
+This approach is not without it's downsides however.  The main ones are (a) losing the CLI code
+generation features and (b) losing automagic CI/CD with the AWS Console.
+
+Those downsides acknowledged, I still really like this approach.
 
 ## Conclusion
+
+AppSync and Cognito are really awesome for frontend development projects. For quickly experimenting with
+them in a project, I recommend using AWS Amplify. But when the day comes to ship a product, you
+don't have to give up control and predictability.  You can take your same client code and, without
+much work, roll it over to terraform + serverless!
